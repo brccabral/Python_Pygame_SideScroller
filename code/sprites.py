@@ -1,4 +1,5 @@
 import random
+from typing import List
 import pygame
 from settings import WINDOW_HEIGHT, WINDOW_WIDTH
 
@@ -26,7 +27,7 @@ class BG(pygame.sprite.Sprite):
 
 
 class Ground(pygame.sprite.Sprite):
-    def __init__(self, groups: pygame.sprite.Group, scale_factor: float):
+    def __init__(self, groups: List[pygame.sprite.Group], scale_factor: float):
         super().__init__(groups)
 
         # image
@@ -39,6 +40,9 @@ class Ground(pygame.sprite.Sprite):
         # position
         self.rect = self.image.get_rect(bottomleft=(0, WINDOW_HEIGHT))
         self.pos = pygame.math.Vector2(self.rect.topleft)
+
+        # mask
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, dt: float):
         self.pos.x -= 360 * dt
@@ -63,6 +67,9 @@ class Plane(pygame.sprite.Sprite):
         # movement
         self.gravity = 600
         self.direction = 0
+
+        # mask
+        self.mask = pygame.mask.from_surface(self.image)
 
     def import_frames(self, scale_factor: float):
         self.frames = []
@@ -95,10 +102,11 @@ class Plane(pygame.sprite.Sprite):
         self.update_gravity(dt)
         self.animate(dt)
         self.rotate()
+        self.mask = pygame.mask.from_surface(self.image)
 
 
 class Obstacle(pygame.sprite.Sprite):
-    def __init__(self, groups: pygame.sprite.Group, scale_factor: float):
+    def __init__(self, groups: List[pygame.sprite.Group], scale_factor: float):
         super().__init__(groups)
 
         orientation = random.choice(("up", "down"))
@@ -120,6 +128,9 @@ class Obstacle(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(midbottom=(x, y))
 
         self.pos = pygame.math.Vector2(self.rect.topleft)
+
+        # mask
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, dt: float):
         self.pos.x -= 400 * dt
