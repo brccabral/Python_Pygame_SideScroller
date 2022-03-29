@@ -57,6 +57,11 @@ class Plane(pygame.sprite.Sprite):
 
         # rect
         self.rect = self.image.get_rect(midleft=(WINDOW_WIDTH / 20, WINDOW_HEIGHT / 2))
+        self.pos = pygame.math.Vector2(self.rect.topleft)
+
+        # movement
+        self.gravity = 250
+        self.direction = 0
 
     def import_frames(self, scale_factor: float):
         self.frames = []
@@ -65,3 +70,13 @@ class Plane(pygame.sprite.Sprite):
             scaled_size = pygame.Vector2(image.get_size()) * scale_factor
             scaled_image = pygame.transform.scale(image, scaled_size)
             self.frames.append(scaled_image)
+
+    def update_gravity(self, dt: float):
+        self.direction += self.gravity * dt
+        self.pos.y += self.direction * dt
+        self.rect.y = round(self.pos.y)
+
+    def update(self, dt: float):
+        self.update_gravity(dt)
+        # self.animate(dt)
+        # self.rotate(dt)
