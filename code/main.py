@@ -27,7 +27,7 @@ class Game:
         # sprite setup
         BG(self.all_sprites, self.scale_factor)
         Ground(self.all_sprites, self.scale_factor)
-        Plane(self.all_sprites, self.scale_factor)
+        Plane(self.all_sprites, self.scale_factor * 0.6)
 
     def run(self):
         last_time = time.time()
