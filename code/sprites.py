@@ -1,5 +1,4 @@
 import pygame
-from settings import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 class BG(pygame.sprite.Sprite):
@@ -19,6 +18,6 @@ class BG(pygame.sprite.Sprite):
 
     def update(self, dt: float):
         self.pos.x -= 300 * dt
-        if self.rect.right <= 0:
+        if self.rect.centerx <= 0:
             self.pos.x = 0
         self.rect.x = round(self.pos.x)
