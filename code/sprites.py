@@ -37,3 +37,10 @@ class Ground(pygame.sprite.Sprite):
 
         # position
         self.rect = self.image.get_rect(bottomleft=(0, WINDOW_HEIGHT))
+        self.pos = pygame.math.Vector2(self.rect.topleft)
+
+    def update(self, dt: float):
+        self.pos.x -= 360 * dt
+        if self.rect.centerx <= 0:
+            self.pos.x = 0
+        self.rect.x = round(self.pos.x)
