@@ -27,7 +27,7 @@ class Game:
         # sprite setup
         BG(self.all_sprites, self.scale_factor)
         Ground(self.all_sprites, self.scale_factor)
-        Plane(self.all_sprites, self.scale_factor * 0.6)
+        self.plane = Plane(self.all_sprites, self.scale_factor * 0.6)
 
     def run(self):
         last_time = time.time()
@@ -38,10 +38,12 @@ class Game:
             last_time = time.time()
 
             # event loop
-            for event in pygame.event.get([pygame.QUIT]):
+            for event in pygame.event.get([pygame.QUIT, pygame.MOUSEBUTTONDOWN]):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.plane.jump()
 
             # game logic
             self.display_surface.fill((0, 0, 0))
