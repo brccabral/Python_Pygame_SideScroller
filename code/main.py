@@ -45,6 +45,11 @@ class Game:
             center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
         )
 
+        # music
+        self.music = pygame.mixer.Sound("sounds/music.wav")
+        self.music.set_volume(0.4)
+        self.music.play(loops=-1)
+
     def collisions(self):
         if (
             pygame.sprite.spritecollide(
