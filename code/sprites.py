@@ -1,3 +1,4 @@
+import random
 import pygame
 from settings import WINDOW_HEIGHT, WINDOW_WIDTH
 
@@ -94,3 +95,35 @@ class Plane(pygame.sprite.Sprite):
         self.update_gravity(dt)
         self.animate(dt)
         self.rotate()
+
+
+class Obstacle(pygame.sprite.Sprite):
+    def __init__(self, groups: pygame.sprite.Group, scale_factor: float):
+        super().__init__(groups)
+
+        orientation = random.choice(("up", "down"))
+
+        image = pygame.image.load(
+            f"graphics/obstacles/{random.choice((0,1))}.png"
+        ).convert_alpha()
+        scaled_size = pygame.Vector2(image.get_size()) * scale_factor
+        self.image = pygame.transform.scale(image, scaled_size)
+
+        x = WINDOW_WIDTH + random.randint(40, 100)
+
+        if orientation == "down":
+            y = -random.randint(10, 50)
+            self.image = pygame.transform.flip(self.image, False, True)
+            self.rect = self.image.get_rect(midtop=(x, y))
+        elif orientation == "up":
+            y = WINDOW_HEIGHT + random.randint(10, 50)
+            self.rect = self.image.get_rect(midbottom=(x, y))
+
+        self.pos = pygame.math.Vector2(self.rect.topleft)
+
+    def update(self, dt: float):
+        self.pos.x -= 400 * dt
+        self.rect.x = round(self.pos.x)
+
+        if self.rect.right <= -100:
+            self.kill()
