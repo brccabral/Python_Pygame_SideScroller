@@ -1,4 +1,5 @@
 import pygame
+from settings import WINDOW_HEIGHT
 
 
 class BG(pygame.sprite.Sprite):
@@ -21,3 +22,18 @@ class BG(pygame.sprite.Sprite):
         if self.rect.centerx <= 0:
             self.pos.x = 0
         self.rect.x = round(self.pos.x)
+
+
+class Ground(pygame.sprite.Sprite):
+    def __init__(self, groups: pygame.sprite.Group, scale_factor: float):
+        super().__init__(groups)
+
+        # image
+        ground_image = pygame.image.load(
+            "graphics/environment/ground.png"
+        ).convert_alpha()
+        scaled_size = pygame.Vector2(ground_image.get_size()) * scale_factor
+        self.image = pygame.transform.scale(ground_image, scaled_size)
+
+        # position
+        self.rect = self.image.get_rect(bottomleft=(0, WINDOW_HEIGHT))
