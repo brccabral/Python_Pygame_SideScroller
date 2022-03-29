@@ -39,7 +39,7 @@ class Game:
             self.collision_sprites,
             dokill=False,
             collided=pygame.sprite.collide_mask,
-        ):
+        ) or self.plane.rect.top <= 0:
             pygame.quit()
             sys.exit()
 
