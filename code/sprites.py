@@ -112,11 +112,11 @@ class Obstacle(pygame.sprite.Sprite):
         x = WINDOW_WIDTH + random.randint(40, 100)
 
         if orientation == "down":
-            y = -random.randint(10, 50)
+            y = -random.randint(10, 100)
             self.image = pygame.transform.flip(self.image, False, True)
             self.rect = self.image.get_rect(midtop=(x, y))
         elif orientation == "up":
-            y = WINDOW_HEIGHT + random.randint(10, 50)
+            y = WINDOW_HEIGHT + random.randint(10, 100)
             self.rect = self.image.get_rect(midbottom=(x, y))
 
         self.pos = pygame.math.Vector2(self.rect.topleft)

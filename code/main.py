@@ -1,7 +1,7 @@
 import pygame
 import sys
 import time
-from sprites import BG, Ground, Plane
+from sprites import BG, Ground, Obstacle, Plane
 from settings import WINDOW_WIDTH, WINDOW_HEIGHT, FRAMERATE
 
 
@@ -29,6 +29,10 @@ class Game:
         Ground(self.all_sprites, self.scale_factor)
         self.plane = Plane(self.all_sprites, self.scale_factor * 0.6)
 
+        # timer
+        self.obstacle_timer = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.obstacle_timer, 1200)
+
     def run(self):
         last_time = time.time()
         while True:
@@ -38,12 +42,16 @@ class Game:
             last_time = time.time()
 
             # event loop
-            for event in pygame.event.get([pygame.QUIT, pygame.MOUSEBUTTONDOWN]):
+            for event in pygame.event.get(
+                [pygame.QUIT, pygame.MOUSEBUTTONDOWN, self.obstacle_timer]
+            ):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.plane.jump()
+                if event.type == self.obstacle_timer:
+                    Obstacle(self.all_sprites, self.scale_factor)
 
             # game logic
             self.display_surface.fill((0, 0, 0))
