@@ -1,5 +1,5 @@
 import pygame
-from settings import WINDOW_HEIGHT
+from settings import WINDOW_HEIGHT, WINDOW_WIDTH
 
 
 class BG(pygame.sprite.Sprite):
@@ -44,3 +44,24 @@ class Ground(pygame.sprite.Sprite):
         if self.rect.centerx <= 0:
             self.pos.x = 0
         self.rect.x = round(self.pos.x)
+
+
+class Plane(pygame.sprite.Sprite):
+    def __init__(self, groups: pygame.sprite.Group, scale_factor: float):
+        super().__init__(groups)
+
+        # image
+        self.import_frames(scale_factor)
+        self.frame_index = 0
+        self.image = self.frames[self.frame_index]
+
+        # rect
+        self.rect = self.image.get_rect(midleft=(WINDOW_WIDTH / 20, WINDOW_HEIGHT / 2))
+
+    def import_frames(self, scale_factor: float):
+        self.frames = []
+        for index in range(3):
+            image = pygame.image.load(f"graphics/plane/red{index}.png").convert_alpha()
+            scaled_size = pygame.Vector2(image.get_size()) * scale_factor
+            scaled_image = pygame.transform.scale(image, scaled_size)
+            self.frames.append(scaled_image)
