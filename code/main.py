@@ -1,6 +1,7 @@
 import pygame
 import sys
 import time
+from sprites import BG
 from settings import WINDOW_WIDTH, WINDOW_HEIGHT, FRAMERATE
 
 
@@ -17,6 +18,9 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.collision_sprites = pygame.sprite.Group()
 
+        # sprite setup
+        BG(self.all_sprites)
+
     def run(self):
         last_time = time.time()
         while True:
@@ -32,6 +36,8 @@ class Game:
                     sys.exit()
 
             # game logic
+            self.all_sprites.draw(self.display_surface)
+
             pygame.display.update()
             self.clock.tick(FRAMERATE)
 
