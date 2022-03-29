@@ -42,6 +42,8 @@ class Game:
                     sys.exit()
 
             # game logic
+            self.display_surface.fill((0, 0, 0))
+            self.all_sprites.update(dt)
             self.all_sprites.draw(self.display_surface)
 
             pygame.display.update()
